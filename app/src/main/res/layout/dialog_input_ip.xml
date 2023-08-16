@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="986px"
+    android:layout_height="480px"
+    android:orientation="vertical">
+
+    <!-- 自定义标题 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32px"
+        android:text="Please enter IP address"
+        android:textSize="@dimen/main_title_w_s"
+        android:textColor="@color/black_1c"
+        android:gravity="center"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <!-- 自定义内容 -->
+    <EditText
+        android:id="@+id/et_ip"
+        android:layout_width="820px"
+        android:layout_height="96px"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:textSize="@dimen/input_ip_w_s"
+        android:maxLength="15"
+        android:digits="1234567890."/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <!-- 自定义按钮 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40px"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNegative"
+            android:layout_width="400px"
+            android:layout_height="76px"
+            android:textSize="@dimen/main_title_w_s"
+            android:text="Exit"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/gray_db"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPositive"
+            android:layout_width="400px"
+            android:layout_height="76px"
+            android:layout_marginStart="40px"
+            android:textSize="@dimen/main_title_w_s"
+            android:text="Confirm"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/orange_btn_tint"/>
+    </LinearLayout>
+
+</LinearLayout>

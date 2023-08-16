@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainFragment"
+    android:background="@color/gray_f5">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/main_iv_orange_oa"/>
+
+    <TextView
+        android:layout_width="@dimen/main_title_w"
+        android:layout_height="@dimen/main_title_h"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/main_title_t"
+        android:layout_marginStart="@dimen/main_title_l"
+        android:textSize="@dimen/main_title_w_s"
+        android:textColor="@color/white"
+        android:text="KDS back Kitchen" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_connect"
+        android:layout_width="@dimen/btn_connect_w"
+        android:layout_height="@dimen/btn_connect_h"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/btn_connect_l"
+        android:layout_marginTop="@dimen/btn_connect_t"
+        android:backgroundTint="@color/black"
+        app:iconSize="@dimen/btn_connect_ic_size"
+        android:paddingStart="3dp"
+        android:paddingEnd="20dp"
+        android:text="Connect"
+        android:textColor="@color/white"
+        android:textSize="@dimen/btn_connect_w_s"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_show"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/rv_show_h"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/rv_show_margin_bottom"
+        android:layout_marginHorizontal="30px"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

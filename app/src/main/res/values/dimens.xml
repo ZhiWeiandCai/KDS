@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_title_w">192dp</dimen>
+    <dimen name="main_title_h">28dp</dimen>
+    <dimen name="main_title_l">67dp</dimen>
+    <dimen name="main_title_t">42dp</dimen>
+    <dimen name="btn_connect_w">124dp</dimen>
+    <dimen name="btn_connect_h">40dp</dimen>
+    <dimen name="btn_connect_l">272dp</dimen>
+    <dimen name="btn_connect_t">40dp</dimen>
+    <dimen name="btn_connect_ic_size">30dp</dimen>
+    <dimen name="rv_show_margin_bottom">40dp</dimen>
+    <dimen name="rv_show_h">562dp</dimen>
+
+    <dimen name="main_title_w_s">24sp</dimen>
+    <dimen name="btn_connect_w_s">16sp</dimen>
+    <dimen name="table_name_w_s">48sp</dimen>
+    <dimen name="dish_name_w_s">20sp</dimen>
+    <dimen name="input_ip_w_s">40sp</dimen>
+</resources>
