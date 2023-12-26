@@ -1,5 +1,7 @@
 package com.pax.kdsdemo.kitchen.adapter
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -22,13 +24,25 @@ class TestShowAdapter(private val viewModel: MainViewModel) : ListAdapter<TableD
 
     override fun onBindViewHolder(holder: TestShowViewHolder, position: Int) {
         val item = getItem(position)
+        if (item.status == 1) {
+            holder.textView.setTextColor(Color.GREEN)
+        }
         holder.textView.text = item.tableName
+        holder.key.text = item.key.toString()
+        Log.i("czw", "onBindViewHolder-" + item.key)
         val innerAdapterDish = DishAdapter()
         holder.rw.adapter = innerAdapterDish
         innerAdapterDish.submitList(item.dishes)
+        holder.itemView.setOnClickListener {
+            updateCardStatus(item, item.status + 1)
+        }
         holder.complete.setOnClickListener {
             deleteItem(item)
         }
+    }
+
+    private fun updateCardStatus(item: TableDish, status: Int) {
+        viewModel.updateCardStatus(item, status)
     }
 
     private fun deleteItem(item: TableDish) {
@@ -38,16 +52,19 @@ class TestShowAdapter(private val viewModel: MainViewModel) : ListAdapter<TableD
 
 class TestShowViewHolder(binding: ItemTestShowBinding) : RecyclerView.ViewHolder(binding.root) {
     val textView: TextView = binding.textViewItemShow
+    val key: TextView = binding.textViewPbKey
     val rw: RecyclerView = binding.rvDish
     val complete: MaterialButton = binding.btnComplete
 }
 
 private class TestShowDiffCallback : androidx.recyclerview.widget.DiffUtil.ItemCallback<TableDish>() {
     override fun areItemsTheSame(oldItem: TableDish, newItem: TableDish): Boolean {
-        return oldItem.id == newItem.id
+        Log.i("czw", "areItemsTheSame-o_id=" + oldItem.id + " newId=" + newItem.id + " o_key=" + oldItem.key + " n_key=" + newItem.key)
+        return oldItem.id == newItem.id && oldItem.key == newItem.key
     }
 
     override fun areContentsTheSame(oldItem: TableDish, newItem: TableDish): Boolean {
-        return oldItem == newItem
+        Log.i("czw", "areContentsTheSame-o_id=" + oldItem.tableName + " n_id=" + newItem.tableName + " o_key=" + oldItem.key + " n_key=" + newItem.key)
+        return oldItem == newItem && oldItem.key == newItem.key && oldItem.status == newItem.status
     }
 }

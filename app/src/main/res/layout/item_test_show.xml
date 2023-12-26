@@ -20,6 +20,17 @@
         android:textSize="@dimen/table_name_w_s"
         android:textColor="@color/black_1c"/>
 
+    <TextView
+        android:id="@+id/text_view_pb_key"
+        android:layout_width="wrap_content"
+        android:layout_height="170px"
+        android:layout_gravity="end"
+        android:paddingTop="30px"
+        android:paddingStart="49px"
+        android:background="@color/white"
+        android:textSize="@dimen/table_name_w_s"
+        android:textColor="@color/black_1c"/>
+
     <LinearLayout
         android:layout_width="560px"
         android:layout_height="match_parent"

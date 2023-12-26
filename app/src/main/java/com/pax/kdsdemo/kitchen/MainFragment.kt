@@ -16,12 +16,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pax.kdsdemo.kitchen.adapter.TestShowAdapter
 import com.pax.kdsdemo.kitchen.databinding.FragmentMainBinding
+import com.pax.kdsdemo.kitchen.sp.StringParam
 import com.pax.kdsdemo.kitchen.utils.RegexUtils
 import com.pax.kdsdemo.kitchen.utils.hideSystemBar
 import com.pax.nebula.common.entity.KDSDish
 
 class MainFragment : Fragment() {
-
     companion object {
         private const val TAG = "MainFragment"
         fun newInstance() = MainFragment()
@@ -31,6 +31,8 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
     private var mMediaPlayer: MediaPlayer? = null
+    //要连接的服务器的IP地址
+    private val wifiAddress: StringParam = StringParam("WIFI_ADDRESS")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +66,9 @@ class MainFragment : Fragment() {
                 binding.btConnect.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_connect_dis, null)
             }
         }
+        if (!TextUtils.isEmpty(wifiAddress.get())) {
+            wifiAddress.get()?.let { viewModel.setIpServer(it) }
+        }
         return root
     }
 
@@ -96,6 +101,11 @@ class MainFragment : Fragment() {
         btnPositive.setOnClickListener {
             // 处理 Positive 按钮点击事件
             val ip = et.text.toString()
+            if (TextUtils.isEmpty(ip)) {
+                wifiAddress.put("")
+            } else if (RegexUtils.Constants.isValidIpAddress(ip)) {
+                wifiAddress.put(ip)
+            }
             viewModel.setIpServer(ip)
             alertDialog.dismiss()
         }

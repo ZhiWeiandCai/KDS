@@ -22,6 +22,7 @@ class OkHttpHelper {
             .callTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
+            .addInterceptor(new RetryOneTimeInterceptor(1, 2000))
             .build();
 
     private OkHttpHelper() {

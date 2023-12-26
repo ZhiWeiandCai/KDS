@@ -6,6 +6,8 @@ import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.pax.kdsdemo.kitchen.data.Constants
+import com.pax.kdsdemo.kitchen.utils.ButtonUtils
 import com.pax.kdsdemo.kitchen.utils.hideSystemBar
 import com.pax.nebula.common.entity.GetAllItemResponse
 import com.pax.nebula.common.entity.KDSDish
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity(), IServer {
     companion object {
         val deviceId = UUID.randomUUID().toString()
     }
+    private var orderNum: Int = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,9 @@ class MainActivity : AppCompatActivity(), IServer {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         Log.i("MainActivity", "czw onKeyDown keyCode =$keyCode,")
+        if (ButtonUtils.isFastDoubleClick()) {
+            return true
+        }
         when (keyCode) {
             KeyEvent.KEYCODE_1 -> {
 
@@ -91,7 +97,7 @@ class MainActivity : AppCompatActivity(), IServer {
         Log.i("MainActivity", "pushKDSDish = $tableId")
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as MainFragment?
         if (tId != null && tableId != null && items != null) {
-            fragment?.receiveDishes(tId, tableId, items)
+            fragment?.receiveDishes((++orderNum).toString(), Constants.ORDER_WORD_C + orderNum, items)
         }
         return true
     }
