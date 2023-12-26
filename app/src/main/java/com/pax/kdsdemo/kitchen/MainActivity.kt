@@ -2,6 +2,7 @@ package com.pax.kdsdemo.kitchen
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -33,6 +34,21 @@ class MainActivity : AppCompatActivity(), IServer {
         }
         ServerManager.getInstance().init(applicationContext, this)
         ServerManager.getInstance().start()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        Log.i("MainActivity", "czw onKeyDown keyCode =$keyCode,")
+        when (keyCode) {
+            KeyEvent.KEYCODE_1 -> {
+
+                return true
+            }
+            KeyEvent.KEYCODE_2 -> {
+
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     override fun onDestroy() {

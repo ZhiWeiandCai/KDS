@@ -20,7 +20,6 @@ import com.pax.kdsdemo.kitchen.utils.RegexUtils
 import com.pax.kdsdemo.kitchen.utils.hideSystemBar
 import com.pax.nebula.common.entity.KDSDish
 
-
 class MainFragment : Fragment() {
 
     companion object {
@@ -106,4 +105,6 @@ class MainFragment : Fragment() {
         }
         alertDialog.show()
     }
+
+
 }
