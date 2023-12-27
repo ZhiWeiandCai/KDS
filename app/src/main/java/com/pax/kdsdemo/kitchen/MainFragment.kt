@@ -13,10 +13,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pax.kdsdemo.kitchen.adapter.TestShowAdapter
 import com.pax.kdsdemo.kitchen.databinding.FragmentMainBinding
 import com.pax.kdsdemo.kitchen.sp.StringParam
+import com.pax.kdsdemo.kitchen.ui.SpaceItemDecorationShow
 import com.pax.kdsdemo.kitchen.utils.RegexUtils
 import com.pax.kdsdemo.kitchen.utils.hideSystemBar
 import com.pax.nebula.common.entity.KDSDish
@@ -42,7 +44,10 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val recyclerViewShow = binding.rvShow
-        //recyclerViewShow.addItemDecoration(SpaceItemDecorationShow(60))
+        recyclerViewShow.addItemDecoration(SpaceItemDecorationShow(30))
+        val gridLayoutManager = GridLayoutManager(requireContext(), 4)
+        recyclerViewShow.layoutManager = gridLayoutManager
+        recyclerViewShow.isNestedScrollingEnabled = false
         val adapterShow = TestShowAdapter(viewModel)
         recyclerViewShow.adapter = adapterShow
         viewModel.texts.observe(viewLifecycleOwner) {
@@ -59,11 +64,13 @@ class MainFragment : Fragment() {
         viewModel.isConnect.observe(viewLifecycleOwner) {
             Log.i(TAG, "isConnect=$it")
             if (it) {
-                binding.btConnect.iconTint = ContextCompat.getColorStateList(requireContext(), R.color.orange_btn_tint)
+                binding.btConnect.iconTint = ContextCompat.getColorStateList(requireContext(), R.color.green_2)
                 binding.btConnect.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_connect, null)
+                binding.btConnect.setText(R.string.w_wifi_connected)
             } else {
                 binding.btConnect.iconTint = ContextCompat.getColorStateList(requireContext(), R.color.white)
                 binding.btConnect.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_connect_dis, null)
+                binding.btConnect.setText(R.string.w_wifi_disconnected)
             }
         }
         if (!TextUtils.isEmpty(wifiAddress.get())) {

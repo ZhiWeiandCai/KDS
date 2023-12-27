@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="560px"
-    android:layout_height="match_parent"
-    app:cardCornerRadius="60px"
+    android:layout_width="428px"
+    android:layout_height="284px"
+    app:cardCornerRadius="30px"
     app:cardElevation="2px"
     app:strokeWidth="0dp"
-    app:cardBackgroundColor="#1FFF8138"
-    android:layout_marginVertical="2px"
-    android:layout_marginHorizontal="30px">
+    app:cardBackgroundColor="#FF3B7EFC"
+    android:layout_marginHorizontal="16px">
 
     <TextView
         android:id="@+id/text_view_item_show"
         android:layout_width="match_parent"
-        android:layout_height="170px"
-        android:paddingTop="30px"
-        android:paddingStart="49px"
-        android:background="@color/white"
+        android:layout_height="60px"
+        android:paddingTop="10px"
+        android:paddingStart="30px"
         android:textSize="@dimen/table_name_w_s"
-        android:textColor="@color/black_1c"/>
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/text_view_o_status"
+        android:layout_width="wrap_content"
+        android:layout_height="60px"
+        android:gravity="center"
+        android:layout_marginStart="150px"
+        android:textSize="16sp"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/text_view_pb_key"
-        android:layout_width="wrap_content"
-        android:layout_height="170px"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_margin="6dp"
         android:layout_gravity="end"
-        android:paddingTop="30px"
-        android:paddingStart="49px"
-        android:background="@color/white"
+        android:gravity="center"
         android:textSize="@dimen/table_name_w_s"
-        android:textColor="@color/black_1c"/>
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
 
     <LinearLayout
-        android:layout_width="560px"
+        android:layout_width="428px"
         android:layout_height="match_parent"
-        android:layout_marginTop="170px"
+        android:layout_marginTop="60px"
         android:orientation="vertical"
         android:background="@color/white">
         <androidx.recyclerview.widget.RecyclerView
@@ -42,7 +50,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:layoutManager="LinearLayoutManager"/>
+            app:layoutManager="LinearLayoutManager"
+            android:layout_marginTop="5dp"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_complete"
             android:layout_width="480px"
@@ -52,6 +61,7 @@
             android:textSize="@dimen/main_title_w_s"
             android:text="Completed"
             android:textAllCaps="false"
-            android:backgroundTint="@color/orange_btn_tint"/>
+            android:backgroundTint="@color/orange_btn_tint"
+            android:visibility="gone"/>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

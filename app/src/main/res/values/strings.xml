@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">KDS</string>
+
+    <string name="w_wifi_disconnected">Disconnect</string>
+    <string name="w_wifi_connected">Connected</string>
+
+    <string name="order_ready">Ready</string>
+    <string name="order_pending">Pending</string>
 </resources>

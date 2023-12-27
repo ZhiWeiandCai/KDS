@@ -18,8 +18,10 @@ class SpaceItemDecorationShow(private val space: Int) : RecyclerView.ItemDecorat
         //不是第一个的格子都设一个顶部的间距
         //outRect.left = space
         //由于每行都只有3个，所以第一个都是3的倍数，把左边距设为0
-        /*if (parent.getChildLayoutPosition(view) == 0) {
-            outRect.left = 2
-        }*/
+        if (parent.getChildLayoutPosition(view) >= 8) {
+            outRect.bottom = 0
+        } else if (parent.getChildLayoutPosition(view) >= 0) {
+            outRect.bottom = space
+        }
     }
 }

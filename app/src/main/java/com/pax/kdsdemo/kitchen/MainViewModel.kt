@@ -136,14 +136,21 @@ class MainViewModel : ViewModel() {
         // 获取当前的列表
         val currentList = _texts.value?.toMutableList() ?: mutableListOf()
         val iterator: MutableIterator<TableDish> = currentList.iterator()
+        var pos = -1
         var found = false
         while (iterator.hasNext()) {
-            val tableDish: TableDish = iterator.next()
+            var tableDish: TableDish = iterator.next()
+            pos++
             if (tableDish.id == position.id) {
                 iterator.remove()
                 found = true
-            } else {
-                if (found) tableDish.key--
+                break
+            }
+        }
+        if (found) {
+            for (i in pos until currentList.size) {
+                val updatedTableDish = currentList[i].copy(key = currentList[i].key - 1)
+                currentList[i] = updatedTableDish // 直接替换原对象为新对象
             }
         }
         currentList.forEach {
@@ -153,14 +160,20 @@ class MainViewModel : ViewModel() {
     }
 
     fun updateCardStatus(item: TableDish, status: Int) {
+        Log.i("czw", "updateCardStatus status=$status")
         val currentList = _texts.value?.toMutableList() ?: mutableListOf()
         val iterator: MutableIterator<TableDish> = currentList.iterator()
+        var pos = -1
         var found = false
         while (iterator.hasNext()) {
-            val tableDish: TableDish = iterator.next()
+            var tableDish: TableDish = iterator.next()
+            pos++
             if (tableDish.id == item.id) {
-                tableDish.status = status
+                val tableDishT = tableDish.copy(status = status)
+                iterator.remove()
+                currentList.add(pos, tableDishT)
                 found = true
+                break
             }
         }
         _texts.value = currentList
