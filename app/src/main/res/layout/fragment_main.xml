@@ -41,6 +41,22 @@
         android:text="@string/w_wifi_disconnected"
         android:textColor="@color/white"
         android:textSize="@dimen/btn_connect_w_s"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_page_left"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        app:layout_constraintStart_toEndOf="@id/bt_connect"
+        app:layout_constraintTop_toTopOf="@id/bt_connect"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/ic_page_left"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_page_right"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        app:layout_constraintStart_toEndOf="@id/btn_page_left"
+        app:layout_constraintTop_toTopOf="@id/bt_connect"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/ic_page_right"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_show"

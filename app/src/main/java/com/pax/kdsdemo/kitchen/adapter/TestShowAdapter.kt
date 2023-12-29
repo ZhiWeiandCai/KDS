@@ -75,13 +75,13 @@ class TestShowViewHolder(binding: ItemTestShowBinding) : RecyclerView.ViewHolder
 
 private class TestShowDiffCallback : androidx.recyclerview.widget.DiffUtil.ItemCallback<TableDish>() {
     override fun areItemsTheSame(oldItem: TableDish, newItem: TableDish): Boolean {
-        Log.i("czw", "areItemsTheSame-o_id=" + oldItem.id + " newId=" + newItem.id + " o_key=" + oldItem.key + " n_key=" + newItem.key)
+        //Log.i("czw", "areItemsTheSame-o_id=" + oldItem.id + " newId=" + newItem.id + " o_key=" + oldItem.key + " n_key=" + newItem.key)
         return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: TableDish, newItem: TableDish): Boolean {
-        Log.i("czw", "areContentsTheSame-o_id=" + oldItem.tableName + " n_id=" + newItem.tableName
-                + " o_key=" + oldItem.key + " n_key=" + newItem.key + " o_s=" + oldItem.status + " n_s=" + newItem.status)
+//        Log.i("czw", "areContentsTheSame-o_id=" + oldItem.tableName + " n_id=" + newItem.tableName
+//                + " o_key=" + oldItem.key + " n_key=" + newItem.key + " o_s=" + oldItem.status + " n_s=" + newItem.status)
         return oldItem.id == newItem.id && oldItem.key == newItem.key && oldItem.status == newItem.status
     }
 }

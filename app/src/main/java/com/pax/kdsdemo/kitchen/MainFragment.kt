@@ -19,6 +19,7 @@ import com.pax.kdsdemo.kitchen.adapter.TestShowAdapter
 import com.pax.kdsdemo.kitchen.databinding.FragmentMainBinding
 import com.pax.kdsdemo.kitchen.sp.StringParam
 import com.pax.kdsdemo.kitchen.ui.SpaceItemDecorationShow
+import com.pax.kdsdemo.kitchen.utils.ButtonUtils
 import com.pax.kdsdemo.kitchen.utils.RegexUtils
 import com.pax.kdsdemo.kitchen.utils.hideSystemBar
 import com.pax.nebula.common.entity.KDSDish
@@ -72,6 +73,14 @@ class MainFragment : Fragment() {
                 binding.btConnect.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_connect_dis, null)
                 binding.btConnect.setText(R.string.w_wifi_disconnected)
             }
+        }
+        binding.btnPageLeft.setOnClickListener {
+            if (ButtonUtils.isFastDoubleClick()) return@setOnClickListener
+            viewModel.pageLeftAction()
+        }
+        binding.btnPageRight.setOnClickListener {
+            if (ButtonUtils.isFastDoubleClick()) return@setOnClickListener
+            viewModel.pageRightAction()
         }
         if (!TextUtils.isEmpty(wifiAddress.get())) {
             wifiAddress.get()?.let { viewModel.setIpServer(it) }

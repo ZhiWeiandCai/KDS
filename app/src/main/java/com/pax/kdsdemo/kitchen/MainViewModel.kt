@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.blankj.utilcode.util.NetworkUtils
+import com.pax.kdsdemo.kitchen.data.Constants
 import com.pax.kdsdemo.kitchen.data.DishItem
 import com.pax.kdsdemo.kitchen.data.TableDish
 import com.pax.kdsdemo.kitchen.utils.RegexUtils
@@ -17,6 +18,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.Date
+import java.util.function.Predicate
 
 class MainViewModel : ViewModel() {
 
@@ -38,16 +40,14 @@ class MainViewModel : ViewModel() {
             ))
         }
     }*/
+
+    private var pageCount = 0
+    private val orderBackupList = ArrayList<TableDish>()
     private val _texts = MutableLiveData<List<TableDish>>()
-
     val texts: LiveData<List<TableDish>> = _texts
-
     private val _isConnect = MutableLiveData(false)
-
     val isConnect: LiveData<Boolean> = _isConnect
-
     private val _ipServer = MutableLiveData<String>()
-
     val ipServer: LiveData<String> = _ipServer
 
     fun setIpServer(ip: String) {
@@ -126,9 +126,17 @@ class MainViewModel : ViewModel() {
         if (foundItem == null) {
             // 获取当前的列表
             val currentList = _texts.value?.toMutableList() ?: mutableListOf()
-            tableDish.key = currentList.size + 1
-            currentList.add(tableDish)
-            _texts.postValue(currentList)
+            if (currentList.size == Constants.PAGE_ORDER_NUM) {
+                if (orderBackupList.size < Constants.ORDER_NUM_MAX) {
+                    tableDish.key = orderBackupList.size % Constants.PAGE_ORDER_NUM + 1
+                    orderBackupList.add(tableDish)
+                }
+            } else {
+                tableDish.key = currentList.size + 1
+                currentList.add(tableDish)
+                orderBackupList.add(tableDish)
+                _texts.postValue(currentList)
+            }
         }
     }
 
@@ -143,6 +151,7 @@ class MainViewModel : ViewModel() {
             pos++
             if (tableDish.id == position.id) {
                 iterator.remove()
+                orderBackupList.removeIf { it.id == position.id }
                 found = true
                 break
             }
@@ -151,10 +160,21 @@ class MainViewModel : ViewModel() {
             for (i in pos until currentList.size) {
                 val updatedTableDish = currentList[i].copy(key = currentList[i].key - 1)
                 currentList[i] = updatedTableDish // 直接替换原对象为新对象
+                orderBackupList[pageCount * Constants.PAGE_ORDER_NUM + i] = updatedTableDish
             }
-        }
-        currentList.forEach {
-            Log.i("czw", "deleteTableDishItem-" + it.id + " k-" + it.key)
+            if (currentList.size == 0 && pageCount > 0) {
+                pageCount--
+                currentList.addAll(orderBackupList.subList(pageCount * Constants.PAGE_ORDER_NUM,
+                    pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM))
+            } else if (currentList.size == Constants.PAGE_ORDER_NUM - 1
+                && orderBackupList.size > (pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM - 1)) {
+                val tempTD = orderBackupList[pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM - 1]
+                tempTD.key = Constants.PAGE_ORDER_NUM
+                currentList.add(tempTD)
+                for (i in (pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM) until orderBackupList.size) {
+                    orderBackupList[i].key = i % Constants.PAGE_ORDER_NUM + 1
+                }
+            }
         }
         _texts.value = currentList
     }
@@ -172,10 +192,36 @@ class MainViewModel : ViewModel() {
                 val tableDishT = tableDish.copy(status = status)
                 iterator.remove()
                 currentList.add(pos, tableDishT)
+                orderBackupList[pos + pageCount * Constants.PAGE_ORDER_NUM] = tableDishT
                 found = true
                 break
             }
         }
         _texts.value = currentList
+    }
+
+    fun pageLeftAction() {
+        if (pageCount > 0) {
+            pageCount --
+            val currentList = mutableListOf<TableDish>()
+            currentList.addAll(orderBackupList.subList(pageCount * Constants.PAGE_ORDER_NUM,
+                pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM))
+            _texts.value = currentList
+        }
+    }
+
+    fun pageRightAction() {
+        if (orderBackupList.size >= Constants.PAGE_ORDER_NUM * (pageCount + 2)) {
+            pageCount ++
+            val currentList = mutableListOf<TableDish>()
+            currentList.addAll(orderBackupList.subList(pageCount * Constants.PAGE_ORDER_NUM,
+                pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM))
+            _texts.value = currentList
+        } else if (orderBackupList.size > Constants.PAGE_ORDER_NUM * (pageCount + 1)) {
+            pageCount ++
+            val currentList = mutableListOf<TableDish>()
+            currentList.addAll(orderBackupList.subList(pageCount * Constants.PAGE_ORDER_NUM, orderBackupList.size))
+            _texts.value = currentList
+        }
     }
 }
