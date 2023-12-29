@@ -53,6 +53,16 @@ class MainFragment : Fragment() {
         recyclerViewShow.adapter = adapterShow
         viewModel.texts.observe(viewLifecycleOwner) {
             adapterShow.submitList(it)
+            if (viewModel.pageTotalChange) {
+                binding.indicator.createIndicators(viewModel.pageSizeCallback(), viewModel.pageCountCallback())
+                viewModel.pageTotalChange = false
+            }
+            if (it.isNotEmpty()) {
+                binding.indicator.visibility = View.VISIBLE
+                binding.indicator.animatePageSelected(viewModel.pageCountCallback())
+            } else {
+                binding.indicator.visibility = View.INVISIBLE
+            }
         }
         binding.btConnect.setOnClickListener {
             showCustomDialog()
@@ -82,6 +92,8 @@ class MainFragment : Fragment() {
             if (ButtonUtils.isFastDoubleClick()) return@setOnClickListener
             viewModel.pageRightAction()
         }
+        binding.indicator.createIndicators(1, 0)
+        binding.indicator.visibility = View.INVISIBLE
         if (!TextUtils.isEmpty(wifiAddress.get())) {
             wifiAddress.get()?.let { viewModel.setIpServer(it) }
         }

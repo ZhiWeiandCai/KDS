@@ -100,4 +100,5 @@ dependencies {
     implementation 'com.blankj:utilcodex:1.31.1'
     implementation project(':connection:server')
     implementation project(':connection:client')
+    implementation 'me.relex:circleindicator:2.1.6'
 }

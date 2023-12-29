@@ -41,6 +41,7 @@ class MainViewModel : ViewModel() {
         }
     }*/
 
+    var pageTotalChange = false
     private var pageCount = 0
     private val orderBackupList = ArrayList<TableDish>()
     private val _texts = MutableLiveData<List<TableDish>>()
@@ -130,6 +131,10 @@ class MainViewModel : ViewModel() {
                 if (orderBackupList.size < Constants.ORDER_NUM_MAX) {
                     tableDish.key = orderBackupList.size % Constants.PAGE_ORDER_NUM + 1
                     orderBackupList.add(tableDish)
+                    if (orderBackupList.size % Constants.PAGE_ORDER_NUM == 1) {
+                        pageTotalChange = true
+                        _texts.postValue(currentList)
+                    }
                 }
             } else {
                 tableDish.key = currentList.size + 1
@@ -166,6 +171,7 @@ class MainViewModel : ViewModel() {
                 pageCount--
                 currentList.addAll(orderBackupList.subList(pageCount * Constants.PAGE_ORDER_NUM,
                     pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM))
+                pageTotalChange = true
             } else if (currentList.size == Constants.PAGE_ORDER_NUM - 1
                 && orderBackupList.size > (pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM - 1)) {
                 val tempTD = orderBackupList[pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM - 1]
@@ -174,6 +180,7 @@ class MainViewModel : ViewModel() {
                 for (i in (pageCount * Constants.PAGE_ORDER_NUM + Constants.PAGE_ORDER_NUM) until orderBackupList.size) {
                     orderBackupList[i].key = i % Constants.PAGE_ORDER_NUM + 1
                 }
+                pageTotalChange = true
             }
         }
         _texts.value = currentList
@@ -222,6 +229,18 @@ class MainViewModel : ViewModel() {
             val currentList = mutableListOf<TableDish>()
             currentList.addAll(orderBackupList.subList(pageCount * Constants.PAGE_ORDER_NUM, orderBackupList.size))
             _texts.value = currentList
+        }
+    }
+
+    fun pageCountCallback(): Int {
+        return pageCount
+    }
+
+    fun pageSizeCallback(): Int {
+        return if (orderBackupList.size > 0) {
+            (orderBackupList.size - 1) / Constants.PAGE_ORDER_NUM + 1
+        } else {
+            0
         }
     }
 }

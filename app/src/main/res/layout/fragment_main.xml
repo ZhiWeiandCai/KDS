@@ -70,4 +70,13 @@
         app:spanCount="4"
         android:overScrollMode="never"
         android:scrollbars="none"/>
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:ci_drawable="@drawable/page_indicator_sel"
+        app:ci_margin="8dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
