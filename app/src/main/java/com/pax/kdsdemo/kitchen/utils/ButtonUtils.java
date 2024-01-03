@@ -2,7 +2,7 @@ package com.pax.kdsdemo.kitchen.utils;
 
 public class ButtonUtils {
     private static long lastClickTime = 0;
-    private static long DIFF = 600;
+    private static long DIFF = 500;
     private static int lastButtonId = -1;
 
     /**
@@ -39,5 +39,9 @@ public class ButtonUtils {
         lastClickTime = time;
         lastButtonId = buttonId;
         return false;
+    }
+
+    public static void resetLastClickTime() {
+        lastClickTime = 0;
     }
 }

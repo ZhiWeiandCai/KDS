@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.pax.kdsdemo.kitchen.MainFragment
 import com.pax.kdsdemo.kitchen.MainViewModel
 import com.pax.kdsdemo.kitchen.R
 import com.pax.kdsdemo.kitchen.data.Constants
@@ -40,7 +41,7 @@ class TestShowAdapter(private val viewModel: MainViewModel) : ListAdapter<TableD
         }
         holder.textView.text = item.tableName
         holder.key.text = item.key.toString()
-        Log.i("czw", "onBindViewHolder-" + item.key)
+        //Log.i("czw", "onBindViewHolder-" + item.key)
         val innerAdapterDish = DishAdapter()
         holder.rw.adapter = innerAdapterDish
         innerAdapterDish.submitList(item.dishes)

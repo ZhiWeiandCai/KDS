@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pax.kdsdemo.kitchen.adapter.TestShowAdapter
 import com.pax.kdsdemo.kitchen.databinding.FragmentMainBinding
@@ -36,6 +38,7 @@ class MainFragment : Fragment() {
     private var mMediaPlayer: MediaPlayer? = null
     //要连接的服务器的IP地址
     private val wifiAddress: StringParam = StringParam("WIFI_ADDRESS")
+    private lateinit var recyclerViewShow: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +47,7 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val recyclerViewShow = binding.rvShow
+        recyclerViewShow = binding.rvShow
         recyclerViewShow.addItemDecoration(SpaceItemDecorationShow(30))
         val gridLayoutManager = GridLayoutManager(requireContext(), 4)
         recyclerViewShow.layoutManager = gridLayoutManager
@@ -113,13 +116,31 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
-    private fun showCustomDialog() {
+    fun clickOnPb20(key: Int) {
+        Log.i(TAG, "clickOnPb20 key=$key rv.childCount=" +recyclerViewShow.childCount)
+        if (recyclerViewShow.childCount >= key) {
+            ButtonUtils.resetLastClickTime()
+            recyclerViewShow.getChildAt(key - 1).performClick()
+        }
+    }
+
+    fun pageLeft() {
+        viewModel.pageLeftAction()
+    }
+
+    fun pageRight() {
+        viewModel.pageRightAction()
+    }
+
+    private var alertDialog: AlertDialog? = null
+    fun showCustomDialog() {
+        if (alertDialog?.isShowing == true) return
         val customView = layoutInflater.inflate(R.layout.dialog_input_ip, null)
-        val alertDialog = MaterialAlertDialogBuilder(requireContext())
+        alertDialog = MaterialAlertDialogBuilder(requireContext())
             .setView(customView).create()
-        alertDialog.setCanceledOnTouchOutside(false)
-        alertDialog.window?.setLayout(986, 480)
-        alertDialog.window?.hideSystemBar()
+        alertDialog!!.setCanceledOnTouchOutside(false)
+        alertDialog!!.window?.setLayout(986, 480)
+        alertDialog!!.window?.hideSystemBar()
         val et = customView.findViewById<EditText>(R.id.et_ip)
         if (!TextUtils.isEmpty(viewModel.ipServer.value))
             et.setText(viewModel.ipServer.value)
@@ -135,14 +156,13 @@ class MainFragment : Fragment() {
                 wifiAddress.put(ip)
             }
             viewModel.setIpServer(ip)
-            alertDialog.dismiss()
+            alertDialog!!.dismiss()
         }
         btnNegative.setOnClickListener {
             // 处理 Negative 按钮点击事件
-            alertDialog.dismiss()
+            alertDialog!!.dismiss()
         }
-        alertDialog.show()
+        alertDialog!!.show()
     }
-
 
 }

@@ -44,15 +44,85 @@ class MainActivity : AppCompatActivity(), IServer {
         if (ButtonUtils.isFastDoubleClick()) {
             return true
         }
-        when (keyCode) {
-            KeyEvent.KEYCODE_1 -> {
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as MainFragment?
+        if (fragment != null) {
+            if (fragment.isResumed)
+                when (keyCode) {
+                    KeyEvent.KEYCODE_7 -> {
+                        fragment.pageLeft()
+                        return true
+                    }
 
-                return true
-            }
-            KeyEvent.KEYCODE_2 -> {
+                    KeyEvent.KEYCODE_8 -> {
+                        fragment.pageRight()
+                        return true
+                    }
 
-                return true
-            }
+                    KeyEvent.KEYCODE_1 -> {
+                        fragment.clickOnPb20(1)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_2 -> {
+                        fragment.clickOnPb20(2)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_3 -> {
+                        fragment.clickOnPb20(3)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_4 -> {
+                        fragment.clickOnPb20(4)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_5 -> {
+                        fragment.clickOnPb20(5)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_6 -> {
+                        fragment.clickOnPb20(6)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_A -> {
+                        fragment.clickOnPb20(7)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_B -> {
+                        fragment.clickOnPb20(8)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_C -> {
+                        fragment.clickOnPb20(9)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_D -> {
+                        fragment.clickOnPb20(10)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_E -> {
+                        fragment.clickOnPb20(11)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_F -> {
+                        fragment.clickOnPb20(12)
+                        return true
+                    }
+
+                    KeyEvent.KEYCODE_G -> {
+                        fragment.showCustomDialog()
+                        return true
+                    }
+                }
         }
         return super.onKeyDown(keyCode, event)
     }
